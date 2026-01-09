@@ -1,58 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Navigation Logic ---
-    const navLinks = document.querySelectorAll('.nav-link, .btn-primary, .btn-outline, .footer-links a');
-    const sections = document.querySelectorAll('.page-section');
+    // --- Mobile Menu Toggle ---
     const mobileToggle = document.getElementById('mobile-toggle');
     const navMenu = document.getElementById('nav-links');
     const navbar = document.getElementById('navbar');
-
-    function showSection(sectionId) {
-        // Hide all sections
-        sections.forEach(section => {
-            section.classList.remove('active');
-        });
-
-        // Show target section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        // Update active link in navbar
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${sectionId}`) {
-                link.classList.add('active');
-            }
-        });
-
-        // Close mobile menu if open
-        if (navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-            mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        }
-    }
-
-    // Handle clicks on nav links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const sectionId = href.substring(1);
-                showSection(sectionId);
-                // Update URL hash without jumping
-                history.pushState(null, null, href);
-            }
-        });
-    });
-
-    // Handle initial load based on hash
-    const initialHash = window.location.hash.substring(1) || 'home';
-    showSection(initialHash);
-
-    // --- Mobile Menu Toggle ---
     mobileToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
         const isActive = navMenu.classList.contains('active');
